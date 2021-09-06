@@ -6,7 +6,10 @@
                 "description": "If you need help with the configuration have a look here: https://github.com/ezand/dragino",
                 "data": {
                     "username": "Username",
-                    "password": "Password"
+                    "password": "Password",
+                    "host": "Host",
+                    "port": "Port",
+                    "model": "Model"
                 }
             }
         },

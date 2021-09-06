@@ -6,8 +6,12 @@ import voluptuous as vol
 
 from .api import IntegrationDraginoApiClient
 from .const import (
-    CONF_PASSWORD,
-    CONF_USERNAME,
+    CONF_BIND_HOST,
+    CONF_LISTEN_PORT,
+    CONF_DEVICE_MODEL,
+    DEFAULT_BIND_HOST,
+    DEFAULT_LISTEN_PORT,
+    DEFAULT_DEVICE_MODEL,
     DOMAIN,
     PLATFORMS,
 )
@@ -33,11 +37,11 @@ class DraginoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             valid = await self._test_credentials(
-                user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
+                user_input[CONF_LISTEN_PORT], user_input[CONF_DEVICE_MODEL]
             )
             if valid:
                 return self.async_create_entry(
-                    title=user_input[CONF_USERNAME], data=user_input
+                    title=user_input[CONF_DEVICE_MODEL], data=user_input
                 )
             else:
                 self._errors["base"] = "auth"
@@ -46,8 +50,9 @@ class DraginoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         user_input = {}
         # Provide defaults for form
-        user_input[CONF_USERNAME] = ""
-        user_input[CONF_PASSWORD] = ""
+        user_input[CONF_BIND_HOST] = ""
+        user_input[CONF_LISTEN_PORT] = ""
+        user_input[CONF_DEVICE_MODEL] = ""
 
         return await self._show_config_form(user_input)
 
@@ -62,8 +67,9 @@ class DraginoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_USERNAME, default=user_input[CONF_USERNAME]): str,
-                    vol.Required(CONF_PASSWORD, default=user_input[CONF_PASSWORD]): str,
+                    vol.Required(CONF_BIND_HOST, default=DEFAULT_BIND_HOST): str,
+                    vol.Required(CONF_LISTEN_PORT, default=DEFAULT_LISTEN_PORT): int,
+                    vol.Required(CONF_DEVICE_MODEL, default=DEFAULT_DEVICE_MODEL): vol.In( ["LPS8", "LG308", "DLOS8", "Other"]),
                 }
             ),
             errors=self._errors,
@@ -112,5 +118,5 @@ class DraginoOptionsFlowHandler(config_entries.OptionsFlow):
     async def _update_options(self):
         """Update config entry options."""
         return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_USERNAME), data=self.options
+            title=self.config_entry.data.get(CONF_DEVICE_MODEL), data=self.options
         )

@@ -6,7 +6,10 @@
                 "description": "Hvis du trenger hjep til konfigurasjon ta en titt her: https://github.com/ezand/dragino",
                 "data": {
                     "username": "Brukernavn",
-                    "password": "Passord"
+                    "password": "Passord",
+                    "host": "Vert",
+                    "port": "Port",
+                    "model": "Modell"
                 }
             }
         },
