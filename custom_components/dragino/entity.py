@@ -1,10 +1,10 @@
-"""BlueprintEntity class"""
+"""DraginoEntity class"""
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, NAME, VERSION, ATTRIBUTION
+from .const import DOMAIN, DEVICE_NAME, VERSION, ATTRIBUTION, MANUFACTURER
 
 
-class IntegrationBlueprintEntity(CoordinatorEntity):
+class IntegrationDraginoEntity(CoordinatorEntity):
     def __init__(self, coordinator, config_entry):
         super().__init__(coordinator)
         self.config_entry = config_entry
@@ -18,9 +18,9 @@ class IntegrationBlueprintEntity(CoordinatorEntity):
     def device_info(self):
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
-            "name": NAME,
+            "name": DEVICE_NAME,
             "model": VERSION,
-            "manufacturer": NAME,
+            "manufacturer": MANUFACTURER,
         }
 
     @property

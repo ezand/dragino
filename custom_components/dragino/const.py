@@ -1,11 +1,13 @@
-"""Constants for integration_blueprint."""
+"""Constants for Dragino."""
 # Base component constants
-NAME = "Integration blueprint"
-DOMAIN = "integration_blueprint"
+DEVICE_NAME = "Dragino"
+MANUFACTURER = "Dragino Technology Co., LTD."
+NAME = "Dragino Integration"
+DOMAIN = "dragino"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
-ISSUE_URL = "https://github.com/custom-components/integration_blueprint/issues"
+ATTRIBUTION = "Data provided by Dragino gateway"
+ISSUE_URL = "https://github.com/ezand/dragino/issues"
 
 # Icons
 ICON = "mdi:format-quote-close"

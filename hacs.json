@@ -1,5 +1,5 @@
 {
-    "name": "Integration blueprint",
+    "name": "Dragino Integration",
     "hacs": "1.6.0",
     "domains": [
         "binary_sensor",
