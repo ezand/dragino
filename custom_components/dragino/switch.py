@@ -1,14 +1,15 @@
 """Switch platform for Dragino."""
 from homeassistant.components.switch import SwitchEntity
+from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
 from .entity import IntegrationDraginoEntity
 
 
-async def async_setup_entry(hass, entry, async_add_devices):
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, async_add_devices):
     """Setup sensor platform."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationDraginoBinarySwitch(coordinator, entry)])
+    async_add_devices([IntegrationDraginoBinarySwitch(config_entry)])
 
 
 class IntegrationDraginoBinarySwitch(IntegrationDraginoEntity, SwitchEntity):
@@ -16,13 +17,13 @@ class IntegrationDraginoBinarySwitch(IntegrationDraginoEntity, SwitchEntity):
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
         """Turn on the switch."""
-        await self.coordinator.api.async_set_title("bar")
-        await self.coordinator.async_request_refresh()
+        #await self.coordinator.api.async_set_title("bar")
+        #await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **kwargs):  # pylint: disable=unused-argument
         """Turn off the switch."""
-        await self.coordinator.api.async_set_title("foo")
-        await self.coordinator.async_request_refresh()
+        #await self.coordinator.api.async_set_title("foo")
+        #await self.coordinator.async_request_refresh()
 
     @property
     def name(self):
@@ -37,4 +38,4 @@ class IntegrationDraginoBinarySwitch(IntegrationDraginoEntity, SwitchEntity):
     @property
     def is_on(self):
         """Return true if the switch is on."""
-        return self.coordinator.data.get("title", "") == "foo"
+        return True #self.coordinator.data.get("title", "") == "foo"

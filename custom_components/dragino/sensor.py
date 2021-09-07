@@ -1,12 +1,14 @@
 """Sensor platform for Dragino."""
+from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
+
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
 from .entity import IntegrationDraginoEntity
 
 
-async def async_setup_entry(hass, entry, async_add_devices):
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, async_add_devices):
     """Setup sensor platform."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationDraginoSensor(coordinator, entry)])
+    async_add_devices([IntegrationDraginoSensor(config_entry)])
 
 
 class IntegrationDraginoSensor(IntegrationDraginoEntity):
@@ -20,7 +22,7 @@ class IntegrationDraginoSensor(IntegrationDraginoEntity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.coordinator.data.get("body")
+        return {} #self.coordinator.data.get("body")
 
     @property
     def icon(self):

@@ -1,5 +1,7 @@
 """Binary sensor platform for Dragino."""
 from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 
 from .const import (
     BINARY_SENSOR,
@@ -7,13 +9,12 @@ from .const import (
     DEFAULT_NAME,
     DOMAIN,
 )
-from .entity import IntegrationDraginoEntity
+from .entity import IntegrationDraginoEntity, DraginoDevice
 
 
-async def async_setup_entry(hass, entry, async_add_devices):
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, async_add_devices):
     """Setup binary_sensor platform."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationDraginoBinarySensor(coordinator, entry)])
+    async_add_devices([IntegrationDraginoBinarySensor(config_entry)])
 
 
 class IntegrationDraginoBinarySensor(IntegrationDraginoEntity, BinarySensorEntity):
@@ -32,4 +33,4 @@ class IntegrationDraginoBinarySensor(IntegrationDraginoEntity, BinarySensorEntit
     @property
     def is_on(self):
         """Return true if the binary_sensor is on."""
-        return self.coordinator.data.get("title", "") == "foo"
+        return True #self.coordinator.data.get("title", "") == "foo"

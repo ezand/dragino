@@ -34,7 +34,6 @@ DEFAULT_BIND_HOST = "localhost"
 DEFAULT_LISTEN_PORT = 9999
 DEFAULT_DEVICE_MODEL = "LPS8"
 
-
 STARTUP_MESSAGE = f"""
 -------------------------------------------------------------------
 {NAME}

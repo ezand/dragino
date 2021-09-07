@@ -4,7 +4,6 @@ from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import voluptuous as vol
 
-from .api import IntegrationDraginoApiClient
 from .const import (
     CONF_BIND_HOST,
     CONF_LISTEN_PORT,
@@ -78,9 +77,7 @@ class DraginoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def _test_credentials(self, username, password):
         """Return true if credentials is valid."""
         try:
-            session = async_create_clientsession(self.hass)
-            client = IntegrationDraginoApiClient(username, password, session)
-            await client.async_get_data()
+            # TODO
             return True
         except Exception:  # pylint: disable=broad-except
             pass
