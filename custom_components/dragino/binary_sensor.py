@@ -8,22 +8,28 @@ from .const import (
     BINARY_SENSOR_DEVICE_CLASS,
     DEFAULT_NAME,
     DOMAIN,
+    DEVICE_NAME
 )
 from .entity import IntegrationDraginoEntity, DraginoDevice
+from .server import DraginoTCPServer
 
 
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry, async_add_devices):
     """Setup binary_sensor platform."""
-    async_add_devices([IntegrationDraginoBinarySensor(config_entry)])
+    server = hass.data[DOMAIN][config_entry.entry_id]
+    async_add_devices([IntegrationDraginoBinarySensor(server, config_entry)])
 
 
 class IntegrationDraginoBinarySensor(IntegrationDraginoEntity, BinarySensorEntity):
     """Dragino binary_sensor class."""
+    def __init__(self, server: DraginoTCPServer, config_entry: ConfigEntry):
+        super().__init__(config_entry)
+        self._server = server
 
     @property
     def name(self):
         """Return the name of the binary_sensor."""
-        return f"{DEFAULT_NAME}_{BINARY_SENSOR}"
+        return f"{DEVICE_NAME} Event Server"
 
     @property
     def device_class(self):
@@ -33,4 +39,4 @@ class IntegrationDraginoBinarySensor(IntegrationDraginoEntity, BinarySensorEntit
     @property
     def is_on(self):
         """Return true if the binary_sensor is on."""
-        return True #self.coordinator.data.get("title", "") == "foo"
+        return self._server.is_start_initiated() or self._server.is_running()

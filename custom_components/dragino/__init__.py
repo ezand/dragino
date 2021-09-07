@@ -20,6 +20,7 @@ from .const import (
 )
 
 from .entity import DraginoDevice
+from .server import DraginoTCPServer
 
 #SCAN_INTERVAL = timedelta(seconds=30)
 
@@ -39,8 +40,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     host = entry.data.get(CONF_BIND_HOST)
     port = entry.data.get(CONF_LISTEN_PORT)
+    server = DraginoTCPServer(host, port)
+    server.start()
 
-    #hass.data[DOMAIN][entry.entry_id] = coordinator TODO server here!
+    hass.data[DOMAIN][entry.entry_id] = server
+
+    _LOGGER.info("*******: " + entry.entry_id)
 
     for platform in PLATFORMS:
         if entry.options.get(platform, True):

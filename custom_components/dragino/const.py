@@ -11,6 +11,7 @@ ISSUE_URL = "https://github.com/ezand/dragino/issues"
 
 # Icons
 ICON = "mdi:format-quote-close"
+ICON_SERVER = "mdi:earth"
 
 # Device classes
 BINARY_SENSOR_DEVICE_CLASS = "connectivity"

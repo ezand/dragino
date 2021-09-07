@@ -13,6 +13,7 @@ from .const import (
     DEFAULT_DEVICE_MODEL,
     DOMAIN,
     PLATFORMS,
+    DEVICE_NAME,
 )
 
 
@@ -20,7 +21,7 @@ class DraginoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Dragino."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
+    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
     def __init__(self):
         """Initialize."""
@@ -40,7 +41,7 @@ class DraginoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             )
             if valid:
                 return self.async_create_entry(
-                    title=user_input[CONF_DEVICE_MODEL], data=user_input
+                    title=f"{DEVICE_NAME} {user_input[CONF_DEVICE_MODEL]}", data=user_input
                 )
             else:
                 self._errors["base"] = "auth"
@@ -115,5 +116,5 @@ class DraginoOptionsFlowHandler(config_entries.OptionsFlow):
     async def _update_options(self):
         """Update config entry options."""
         return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_DEVICE_MODEL), data=self.options
+            title=f"{DEVICE_NAME} {self.config_entry.data.get(CONF_DEVICE_MODEL)}", data=self.options
         )
